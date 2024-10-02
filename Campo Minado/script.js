@@ -73,15 +73,21 @@ function revealSquare(square, row, col) {
     if (!square.classList.contains('revealed') && !square.classList.contains('flagged')) {
         const minesAround = countMinesAround(row, col);
         square.classList.add('revealed');
-        square.style.backgroundColor = '#fff';
         revealedCount++;
 
+        // Define a cor de fundo com base no número de minas ao redor
         if (minesAround > 0) {
             square.textContent = minesAround;
-        }
-
-        // Se não houver minas ao redor, revela os vizinhos automaticamente
-        if (minesAround === 0) {
+            if (minesAround === 1) {
+                square.style.backgroundColor = 'green'; // Uma mina ao redor
+            } else if (minesAround === 2) {
+                square.style.backgroundColor = 'yellow'; // Duas minas ao redor
+            } else {
+                square.style.backgroundColor = 'red'; // Três ou mais minas ao redor
+            }
+        } else {
+            square.style.backgroundColor = '#fff'; // Sem minas ao redor
+            // Se não houver minas ao redor, revela os vizinhos automaticamente
             revealAdjacentSquares(row, col);
         }
     }
